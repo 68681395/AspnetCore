@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Common.Logging;
 using System.Linq.Expressions;
+using System.Collections;
 
 namespace TSharp.Core.Osgi
 {

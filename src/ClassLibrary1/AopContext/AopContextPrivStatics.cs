@@ -50,8 +50,7 @@ namespace TSharp.Core
 
         #endregion
 
-        private static Func<IContext> _contextFactory =
-           () => WebContext.Instance;
+        private static Func<IContext> _contextFactory;
         private static IServiceSituation CreateServiceSituation()
         {
             return LazyLoading.New<IServiceSituation>();
