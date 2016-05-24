@@ -66,7 +66,7 @@ namespace TSharp.Core.Osgi
         /// <returns>OsgiEngine.</returns>
         public static OsgiEngine InitWebEngine()
         {
-            
+
             //AopContext.SetHttpContextFactory(() => WebContext.Instance);
             string basePath = Path.GetDirectoryName(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
             return Init(basePath, Path.Combine(basePath, "bin"), "", true);
@@ -78,7 +78,7 @@ namespace TSharp.Core.Osgi
         /// <returns>OsgiEngine.</returns>
         public static OsgiEngine InitWinformEngine(string pluginPath)
         {
-           // AopContext.SetHttpContextFactory(() => WindowContext.Instance);
+            // AopContext.SetHttpContextFactory(() => WindowContext.Instance);
             string basePath = Path.GetDirectoryName(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
             return Init(basePath, basePath, pluginPath, true);
         }
@@ -142,7 +142,8 @@ namespace TSharp.Core.Osgi
         {
 
 
-            InitAssembly(this.GetType().Assembly);
+            //InitAssembly(this.GetType().Assembly);
+            InitAssembly(this.GetType().AssemblyQualifiedName);
 
             foreach (var assm in AppDomain.CurrentDomain.GetAssemblies())
                 InitAssembly(assm);
@@ -215,6 +216,12 @@ namespace TSharp.Core.Osgi
 
         }
 
+        private void InitAssembly(string assemblyQualifiedName)
+        {
+            var assm = Assembly.Load(new AssemblyName(assemblyQualifiedName));
+
+            InitAssembly(assm);
+        }
         private void InitAssembly(Assembly assembly)
         {
             var verAssembly = _assemblys.GetOrAdd(assembly.GetName().Name, new MultiVersionAssembly());

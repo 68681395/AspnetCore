@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using TSharp.Core.Exceptions;
 using TSharp.Core.Osgi.Internal;
 
@@ -21,10 +22,12 @@ namespace TSharp.Core.Osgi
         /// <param name="managerType">扩展点收集类的类型.</param>
         public RegExtensionPointAttribute(Type managerType)
         {
-            var genericType = managerType.BaseType;
-            while (genericType != null && !genericType.IsGenericType)
+
+            //todo : modify  managerType.BaseType to  managerType.DeclaringType
+            var genericType = managerType.DeclaringType;
+            while (genericType != null && !genericType.IsGenericParameter)
             {
-                genericType = genericType.BaseType;
+                genericType = genericType.DeclaringType;
             }
             if (genericType != null)
             {

@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-WebApplication9-3871decf-a4cc-4bb9-aa5a-702b46c01c34",
 
   "dependencies": {
@@ -6,38 +6,31 @@
       "version": "1.0.0-rc2-3002702",
       "type": "platform"
     },
-    "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.Diagnostics": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.Razor.Tools": {
-      "version": "1.0.0-preview1-final",
-      "type": "build"
-    },
-    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.StaticFiles": "1.0.0-rc2-final",
-    "Microsoft.EntityFrameworkCore.SqlServer":  "1.0.0-rc2-final",
-    "Microsoft.EntityFrameworkCore.Tools": {
-      "version": "1.0.0-preview1-final",
-      "type": "build"
-    },
-    "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0-rc2-final",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc2-final",
-    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc2-final",
-    "Microsoft.Extensions.Logging": "1.0.0-rc2-final",
-    "Microsoft.Extensions.Logging.Console": "1.0.0-rc2-final",
-    "Microsoft.Extensions.Logging.Debug": "1.0.0-rc2-final",
-    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc2-final",
-    "Microsoft.VisualStudio.Web.CodeGeneration.Tools": {
-      "version": "1.0.0-preview1-final",
-      "type": "build"
-    },
-    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
-      "version": "1.0.0-preview1-final",
-      "type": "build"
-    }
+    "Microsoft.AspNet.Mvc.Core": "6.0.0-rc2-16770",
+    "Microsoft.AspNet.Mvc.Formatters.Json": "6.0.0-rc2-16770",
+    "Microsoft.Extensions.PlatformAbstractions.Dnx": "1.0.0-rc2-20222",
+    "System.Reflection": "4.1.0-rc2-24027",
+    "System.IO.FileSystem": "4.0.1-rc2-24027",
+    "Microsoft.AspNetCore.Diagnostics": "1.0.0-rc3-20912",
+    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0-rc3-20912",
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0-rc3-20912",
+    "Microsoft.AspNetCore.Mvc": "1.0.0-rc3-20912",
+    "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-20912",
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0-rc3-20912",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-rc3-20912",
+    "Microsoft.AspNetCore.StaticFiles": "1.0.0-rc3-20912",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0-rc3-20912",
+    "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-20912",
+    "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0-rc3-20912",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc3-20912",
+    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc3-20912",
+    "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0-rc3-20912",
+    "Microsoft.Extensions.Logging": "1.0.0-rc3-20912",
+    "Microsoft.Extensions.Logging.Console": "1.0.0-rc3-20912",
+    "Microsoft.Extensions.Logging.Debug": "1.0.0-rc3-20912",
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc3-20912",
+    "Microsoft.VisualStudio.Web.CodeGeneration.Tools": "1.0.0-preview2-20912",
+    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": "1.0.0-preview2-20912"
   },
 
   "tools": {

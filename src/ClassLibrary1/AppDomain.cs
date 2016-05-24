@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace System
@@ -16,7 +17,9 @@ namespace System
 
         internal IEnumerable<Assembly> GetAssemblies()
         {
-            throw new NotImplementedException();
+            return Assembly.GetEntryAssembly().GetReferencedAssemblies().Select(x => Assembly.Load(x));
+
+           // throw new NotImplementedException();
         }
     }
     class Setup

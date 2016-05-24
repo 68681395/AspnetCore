@@ -1,18 +1,14 @@
-﻿using Microsoft.Extensions.PlatformAbstractions;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc.Infrastructure;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.PlatformAbstractions;
 
-namespace Common.Logging
-{
-
-
-
-    public class Class1
-    {
-    }
-}
-
-namespace System
+namespace WebApplication9
 {
 
     public class DirectoryLoader : IAssemblyLoader
