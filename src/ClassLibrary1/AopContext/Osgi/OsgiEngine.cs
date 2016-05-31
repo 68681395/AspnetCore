@@ -6,6 +6,7 @@ using System.Reflection;
 using Common.Logging;
 using TSharp.Core.Osgi.Internal;
 using System.Collections.Concurrent;
+using System.Runtime.Loader;
 
 namespace TSharp.Core.Osgi
 {
@@ -155,7 +156,7 @@ namespace TSharp.Core.Osgi
                     Assembly assembly = null;
                     try
                     {
-                        assembly = Assembly.LoadFrom(dllFile);
+                        assembly = LoadFrom(dllFile);
                     }
                     catch (BadImageFormatException)
                     {
@@ -173,7 +174,7 @@ namespace TSharp.Core.Osgi
                     Assembly assembly = null;
                     try
                     {
-                        assembly = Assembly.LoadFrom(dllFile);
+                        assembly = LoadFrom(dllFile);
                     }
                     catch (BadImageFormatException e)
                     {
@@ -216,6 +217,11 @@ namespace TSharp.Core.Osgi
 
         }
 
+        private Assembly LoadFrom(string dllFile)
+        {
+            return AssemblyLoadContext.Default.LoadFromAssemblyPath(dllFile);
+        }
+
         private void InitAssembly(string assemblyQualifiedName)
         {
             var assm = Assembly.Load(new AssemblyName(assemblyQualifiedName));
@@ -237,15 +243,13 @@ namespace TSharp.Core.Osgi
         {
             try
             {
-                var extensionPointAttrs = assembly.GetCustomAttributes(typeof(RegExtensionPointAttribute), true)
-                                          as RegExtensionPointAttribute[];
+                var extensionPointAttrs = assembly.GetCustomAttributes<RegExtensionPointAttribute>();
                 if (extensionPointAttrs != null)
                     foreach (RegExtensionPointAttribute extensionPointAttr in extensionPointAttrs)
                     {
                         _extensionPoints[extensionPointAttr.AttributeType] = extensionPointAttr.ExtensionPoint;
                     }
-                var extensionAttrs = assembly.GetCustomAttributes(typeof(RegExtensionAttribute), true)
-                                     as RegExtensionAttribute[];
+                var extensionAttrs = assembly.GetCustomAttributes<RegExtensionAttribute>();
                 if (extensionAttrs != null)
                     foreach (RegExtensionAttribute extensionAttr in extensionAttrs)
                     {

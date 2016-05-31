@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc.Infrastructure;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.PlatformAbstractions;
 
@@ -33,7 +32,7 @@ namespace WebApplication9
             throw new NotImplementedException();
         }
     }
-
+    /*
     /// <summary>
     /// This will return assemblies found in App_Plugins plugin's /bin folders
     /// </summary>
@@ -150,5 +149,5 @@ namespace WebApplication9
                         new[] { new AssemblyName(x.FullName) }))));
         }
     }
-
+    */
 }

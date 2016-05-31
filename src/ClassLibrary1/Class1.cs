@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.PlatformAbstractions;
-using System;
-using Microsoft.AspNet.Mvc.Infrastructure;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Linq;
+using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.Extensions.FileProviders;
 
 namespace Common.Logging
 {
@@ -11,6 +14,13 @@ namespace Common.Logging
     {
     }
 }
+
+/*
+ * 
+ * 
+ 
+
+
 
 namespace System
 {
@@ -25,6 +35,7 @@ namespace System
             _path = path;
             _context = context;
         }
+
 
         public Assembly Load(AssemblyName assemblyName)
         {
@@ -41,7 +52,7 @@ namespace System
     /// <summary>
     /// This will return assemblies found in App_Plugins plugin's /bin folders
     /// </summary>
-    public class CustomDirectoryAssemblyProvider : IAssemblyProvider
+    public class CustomDirectoryAssemblyProvider : IAssemblyLoadContextAccessor
     {
         private readonly IFileProvider _fileProvider;
         private readonly IAssemblyLoadContextAccessor _loadContextAccessor;
@@ -75,6 +86,14 @@ namespace System
             }
         }
 
+        public IAssemblyLoadContext Default
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Returns assemblies loaded from /bin folders inside of App_Plugins
         /// </summary>
@@ -98,6 +117,12 @@ namespace System
                     yield return assembly2;
                 }
             }
+        }
+
+        public IAssemblyLoadContext GetLoadContext(Assembly assembly)
+        {
+            
+            throw new NotImplementedException();
         }
     }
 
@@ -156,3 +181,5 @@ namespace System
     }
 
 }
+
+        */

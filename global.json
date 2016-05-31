@@ -1,7 +1,8 @@
 ﻿{
   "projects": [
     "src",
-    "test"
+    "test",
+    "C:\\TANGJ15\\code\\aspnet5Source\\dnx"
 
   ],
   "sdk": {
