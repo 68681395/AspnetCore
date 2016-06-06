@@ -39,7 +39,8 @@
       "type": "build"
     },
     "Microsoft.Extensions.DependencyModel": "1.0.0-rc3-002872",
-    "Microsoft.Extensions.PlatformAbstractions.Dnx": "1.0.0-rc2-20222"
+    "Microsoft.Extensions.PlatformAbstractions.Dnx": "1.0.0-rc2-20222",
+    "ClassLibrary1": "1.0.0-*"
   },
 
   "tools": {
