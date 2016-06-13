@@ -144,7 +144,7 @@ namespace TSharp.Core.Osgi
 
 
             //InitAssembly(this.GetType().Assembly);
-            InitAssembly(this.GetType().AssemblyQualifiedName);
+            InitAssembly(this.GetType().GetTypeInfo().Assembly);
 
             foreach (var assm in AppDomain.CurrentDomain.GetAssemblies())
                 InitAssembly(assm);

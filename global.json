@@ -2,7 +2,7 @@
   "projects": [
     "src",
     "test",
-    "C:\\TANGJ15\\code\\aspnet5Source\\dnx"
+    "C:\\TANGJ15\\code\\aspnet5Source\\Hosting\\src\\Microsoft.AspNetCore.Hosting"
 
   ],
   "sdk": {

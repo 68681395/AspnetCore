@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -12,13 +10,29 @@ using Microsoft.Extensions.Logging;
 using WebApplication1.Data;
 using WebApplication1.Models;
 using WebApplication1.Services;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.Reflection;
+using AspNet5ModularApp.Infrastructure;
+using AspNet5ModularApp;
+using Microsoft.Extensions.FileProviders;
+using WebApplication9;
 
 namespace WebApplication1
 {
     public class Startup
     {
+        private string applicationBasePath;
+        private Microsoft.Extensions.PlatformAbstractions.IAssemblyLoaderContainer assemblyLoaderContainer;
+        private Microsoft.Extensions.PlatformAbstractions.IAssemblyLoadContextAccessor assemblyLoadContextAccessor;
+
+
+
         public Startup(IHostingEnvironment env)
         {
+
+           
+
+            this.applicationBasePath = env.WebRootPath;
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -39,6 +53,15 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IEnumerable<Assembly> assemblies = AssemblyManager.LoadAssemblies(
+       this.applicationBasePath.Substring(0, this.applicationBasePath.LastIndexOf("src")) + "artifacts\\bin\\",
+       this.assemblyLoaderContainer,
+       this.assemblyLoadContextAccessor);
+
+            ExtensionManager.SetAssemblies(assemblies);
+            foreach (IExtension extension in ExtensionManager.Extensions)
+                extension.ConfigureServices(services);
+
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -47,7 +70,14 @@ namespace WebApplication1
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddPrecompiledRazorViews(ExtensionManager.Assemblies.ToArray())
+                .AddRazorOptions(
+                    razorOptions =>
+                        {
+                            razorOptions.FileProviders.Add(GetFileProvider(assemblies, this.applicationBasePath));
+                        });
+
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -82,7 +112,22 @@ namespace WebApplication1
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                foreach (IExtension extension in ExtensionManager.Extensions)
+                    extension.RegisterRoutes(routes);
             });
+
+
+
+        }
+        public IFileProvider GetFileProvider(IEnumerable<Assembly> assemblies, string path)
+        {
+            IEnumerable<IFileProvider> fileProviders = new IFileProvider[] { new PhysicalFileProvider(path) };
+
+            return new Microsoft.Extensions.FileProviders.CompositeFileProvider(
+              fileProviders.Concat(
+                assemblies.Select(a => new EmbeddedFileProvider(a, a.GetName().Name))
+              )
+            );
         }
     }
 }

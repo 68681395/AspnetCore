@@ -9,6 +9,7 @@ namespace System
         static AppDomain()
         {
             CurrentDomain = new AppDomain();
+            CurrentDomain.SetupInformation = new Setup();
         }
 
 

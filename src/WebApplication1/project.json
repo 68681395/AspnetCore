@@ -39,9 +39,10 @@
       "type": "build"
     },
     "Microsoft.Extensions.DependencyModel": "1.0.0-rc3-002872",
-    "Microsoft.Extensions.PlatformAbstractions.Dnx": "1.0.0-rc2-20222",
-    "ClassLibrary1": "1.0.0-*"
-  },
+    "ClassLibrary1": "1.0.0-*",
+    "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0-rc3-21167",
+    "Microsoft.Extensions.FileProviders.Embedded": "1.0.0-rc2-final",
+    "System.Runtime.Loader": "4.0.0-rc3-24206-00"  },
 
   "tools": {
     "Microsoft.AspNetCore.Razor.Tools": {
