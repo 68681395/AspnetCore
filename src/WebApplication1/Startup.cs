@@ -29,7 +29,7 @@ namespace WebApplication1
 
         public Startup(IHostingEnvironment env)
         {
-           this.applicationBasePath = env.WebRootPath;
+            this.applicationBasePath = env.WebRootPath;
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
