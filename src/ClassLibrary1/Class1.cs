@@ -1,11 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Linq;
-using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.Extensions.FileProviders;
-
-namespace Common.Logging
+﻿namespace Common.Logging
 {
 
 

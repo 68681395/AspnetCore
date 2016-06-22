@@ -5,28 +5,28 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.PlatformAbstractions;
+using System.Runtime.Loader;
 
 namespace AspNet5ModularApp
 {
-  public static class AssemblyManager
-  {
-    public static IEnumerable<Assembly> LoadAssemblies(string path, IAssemblyLoaderContainer assemblyLoaderContainer, IAssemblyLoadContextAccessor assemblyLoadContextAccessor)
+    public static class AssemblyManager
     {
-      List<Assembly> assemblies = new List<Assembly>();
-
-      IAssemblyLoadContext assemblyLoadContext = assemblyLoadContextAccessor.Default;
-
-      using (assemblyLoaderContainer.AddLoader(new DirectoryAssemblyLoader(path, assemblyLoadContext)))
-      {
-        foreach (string extensionPath in Directory.EnumerateFiles(path, "*.dll"))
+        public static IEnumerable<Assembly> LoadAssemblies(string path)
         {
-          string extensionFilename = Path.GetFileNameWithoutExtension(extensionPath);
+            List<Assembly> assemblies = new List<Assembly>();
 
-          assemblies.Add(assemblyLoadContext.Load(extensionFilename));
+
+            AssemblyLoadContext assemblyLoadContext = AssemblyLoadContext.Default;
+
+
+            {
+                foreach (string extensionPath in Directory.EnumerateFiles(path, "*.dll"))
+                {
+                    assemblies.Add(assemblyLoadContext.LoadFromAssemblyPath(extensionPath));
+                }
+            }
+
+            return assemblies;
         }
-      }
-
-      return assemblies;
     }
-  }
 }

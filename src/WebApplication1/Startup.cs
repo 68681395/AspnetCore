@@ -10,21 +10,19 @@ using Microsoft.Extensions.Logging;
 using WebApplication1.Data;
 using WebApplication1.Models;
 using WebApplication1.Services;
-using Microsoft.Extensions.PlatformAbstractions;
 using System.Reflection;
-using AspNet5ModularApp.Infrastructure;
-using AspNet5ModularApp;
 using Microsoft.Extensions.FileProviders;
 using WebApplication9;
+using AspNet5ModularApp;
+using AspNet5ModularApp.Infrastructure;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApplication1
 {
     public class Startup
     {
         private string applicationBasePath;
-        private Microsoft.Extensions.PlatformAbstractions.IAssemblyLoaderContainer assemblyLoaderContainer;
-        private Microsoft.Extensions.PlatformAbstractions.IAssemblyLoadContextAccessor assemblyLoadContextAccessor;
-
+        
 
 
         public Startup(IHostingEnvironment env)
@@ -51,10 +49,9 @@ namespace WebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             IEnumerable<Assembly> assemblies = AssemblyManager.LoadAssemblies(
-       this.applicationBasePath.Substring(0, this.applicationBasePath.LastIndexOf("src")) + "artifacts\\bin\\",
-       this.assemblyLoaderContainer,
-       this.assemblyLoadContextAccessor);
-
+       this.applicationBasePath.Substring(0, this.applicationBasePath.LastIndexOf("src")) + "artifacts\\bin\\"
+     );
+           
             ExtensionManager.SetAssemblies(assemblies);
             foreach (IExtension extension in ExtensionManager.Extensions)
                 extension.ConfigureServices(services);
@@ -79,6 +76,8 @@ namespace WebApplication1
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
