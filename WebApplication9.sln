@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{52CB08F2-31B0-4817-A4F6-05303871522F}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
+		NuGet.config = NuGet.config
 	EndProjectSection
 	ProjectSection(FolderGlobals) = preProject
 		__JSONSchema = 
@@ -16,6 +17,8 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ClassLibrary1", "src\ClassLibrary1\ClassLibrary1.xproj", "{E4B035D8-A884-41D7-B8F5-5E1CD3701480}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebApplication1", "src\WebApplication1\WebApplication1.xproj", "{A6FFC302-6BDF-48B3-8D07-59902DAB4D36}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TSharp.Core", "src\TSharp.Core\TSharp.Core.xproj", "{AB2CF4C3-8C67-459A-9E9A-99983F075741}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +34,10 @@ Global
 		{A6FFC302-6BDF-48B3-8D07-59902DAB4D36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6FFC302-6BDF-48B3-8D07-59902DAB4D36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6FFC302-6BDF-48B3-8D07-59902DAB4D36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB2CF4C3-8C67-459A-9E9A-99983F075741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB2CF4C3-8C67-459A-9E9A-99983F075741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB2CF4C3-8C67-459A-9E9A-99983F075741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB2CF4C3-8C67-459A-9E9A-99983F075741}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,5 +45,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E4B035D8-A884-41D7-B8F5-5E1CD3701480} = {9652825C-5FC6-4D54-B478-D3E75818EF8C}
 		{A6FFC302-6BDF-48B3-8D07-59902DAB4D36} = {9652825C-5FC6-4D54-B478-D3E75818EF8C}
+		{AB2CF4C3-8C67-459A-9E9A-99983F075741} = {9652825C-5FC6-4D54-B478-D3E75818EF8C}
 	EndGlobalSection
 EndGlobal

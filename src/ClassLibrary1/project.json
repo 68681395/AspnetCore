@@ -1,12 +1,11 @@
 {
   "copyright": "copyright of t sharp",
   "dependencies": {
-    "Microsoft.AspNetCore.Routing": "1.0.0-rc3-21343",
-    "Microsoft.AspNetCore.Routing.Abstractions": "1.0.0-rc3-21343",
-    "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-rc3-21343",
-    "NETStandard.Library": "1.6.0",
-    "System.Collections.NonGeneric": "4.0.1",
-    "System.Runtime.Loader": "4.0.0"
+    "Microsoft.AspNetCore.Routing": "1.1.0-alpha1-21429",
+    "Microsoft.AspNetCore.Routing.Abstractions": "1.1.0-alpha1-21429",
+    "Microsoft.Extensions.Configuration.Abstractions": "1.1.0-alpha1-21429",
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.1.0-alpha1-21429",
+  
   },
   "runtimes": {
 
@@ -16,6 +15,10 @@
   "description": "t sharp description",
   "frameworks": {
     "netstandard1.6": {
+      "dependencies": {
+        "System.Collections.NonGeneric": "4.0.2-*",
+        "System.Runtime.Loader": "4.0.1-*"
+      }
     }
   },
   "title": "Tsharp.Core",

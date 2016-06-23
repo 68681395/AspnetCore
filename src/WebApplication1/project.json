@@ -2,28 +2,29 @@
   "userSecretsId": "aspnet-WebApplication1-42aaaa2e-5d17-429e-b63c-25ec4d885053",
 
   "dependencies": {
+    
     "ClassLibrary1": "1.0.0-*",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.1.0-alpha1-21429",
-    "Microsoft.AspNetCore.Authorization": "1.1.0-alpha1-21429",
-    "Microsoft.AspNetCore.Diagnostics": "1.0.0-rc3-21343",
-    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0-rc3-21343",
-    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0-rc3-21343",
-    "Microsoft.AspNetCore.Mvc": "1.0.0-rc3-21343",
-    "Microsoft.AspNetCore.Mvc.Abstractions": "1.0.0-rc3-21343",
-    "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0-rc3-21343",
-    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0-rc3-21343",
-    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-rc3-21343",
-    "Microsoft.AspNetCore.StaticFiles": "1.0.0-rc3-21343",
-    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0-rc3-21343",
-    "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0-rc3-21343",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc3-21343",
-    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc3-21343",
-    "Microsoft.Extensions.FileProviders.Composite": "1.0.0-rc3-21343",
-    "Microsoft.Extensions.FileProviders.Embedded": "1.0.0-rc3-21343",
-    "Microsoft.Extensions.Logging": "1.0.0-rc3-21343",
-    "Microsoft.Extensions.Logging.Console": "1.0.0-rc3-21343",
-    "Microsoft.Extensions.Logging.Debug": "1.0.0-rc3-21343",
-    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0-alpha1-21429"
+    "Microsoft.AspNetCore.Diagnostics": "1.1.0-alpha1-21429",
+    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.1.0-alpha1-21429",
+    "Microsoft.AspNetCore.Identity": "1.1.0-alpha1-21429",
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0-alpha1-21429",
+    "Microsoft.AspNetCore.Mvc": "1.1.0-alpha1-21429",
+    "Microsoft.AspNetCore.Mvc.Core": "1.1.0-alpha1-21429",
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0-alpha1-21429",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.1.0-alpha1-21429",
+    "Microsoft.AspNetCore.StaticFiles": "1.1.0-alpha1-21429",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0-alpha1-21429",
+    "Microsoft.Extensions.Configuration.FileExtensions": "1.1.0-alpha1-21429",
+    "Microsoft.Extensions.Configuration.Json": "1.1.0-alpha1-21429",
+    "Microsoft.Extensions.Configuration.UserSecrets": "1.1.0-alpha1-21429",
+    "Microsoft.Extensions.FileProviders.Composite": "1.1.0-alpha1-21429",
+    "Microsoft.Extensions.FileProviders.Embedded": "1.1.0-alpha1-21429",
+    "Microsoft.Extensions.Logging": "1.1.0-alpha1-21429",
+    "Microsoft.Extensions.Logging.Console": "1.1.0-alpha1-21429",
+    "Microsoft.Extensions.Logging.Debug": "1.1.0-alpha1-21429",
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0-alpha1-21429",
+
   },
 
   "tools": {
@@ -57,15 +58,27 @@
 
   "frameworks": {
     "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        },
+        "dotnet-test-xunit": "1.0.0-*",
+        "System.Diagnostics.Process": "4.1.0-*"
+      },
       "imports": [
-      
-        "netstandard1.6"
+        "dnxcore50",
+        "portable-net451+win8"
       ]
     }
+  
   },
 
   "runtimes": {
-  
+    "win8-x64": {
+     
+    },
+    "win7-x64": { }
   },
 
   "buildOptions": {

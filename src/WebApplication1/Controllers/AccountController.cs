@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using WebApplication1.Models;
 using WebApplication1.Models.AccountViewModels;
 using WebApplication1.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace WebApplication1.Controllers
 {
@@ -80,6 +82,11 @@ namespace WebApplication1.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private IActionResult Lockout()
+        {
+            throw new NotImplementedException();
         }
 
         //

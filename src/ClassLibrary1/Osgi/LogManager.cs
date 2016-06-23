@@ -25,4 +25,39 @@ namespace Common.Logging
         void Error(TypeInitializationException ex);
     }
 
+    class Log : ILog
+    {
+        //private Microsoft.Extensions.Logging.Logger<string> logger = new Microsoft.Extensions.Logging.Logger<string>();
+
+
+        public void Debug(string v)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Error(TypeInitializationException ex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Error(string v, Exception ex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ErrorFormat(string v, Exception ex, params object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Warn(string v)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Warn(string v, Exception ex)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

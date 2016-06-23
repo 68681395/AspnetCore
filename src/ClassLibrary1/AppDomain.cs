@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -27,7 +28,7 @@ namespace System
     {
         public string ConfigurationFile
         {
-            get { return AppContext.BaseDirectory; }
+            get { return Directory.GetCurrentDirectory(); }
             set
             {
 

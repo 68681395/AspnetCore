@@ -48,9 +48,8 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            IEnumerable<Assembly> assemblies = AssemblyManager.LoadAssemblies(
-       this.applicationBasePath.Substring(0, this.applicationBasePath.LastIndexOf("src")) + "artifacts\\bin\\"
-     );
+            IEnumerable<Assembly> assemblies = Enumerable.Empty<Assembly>();
+          //  AssemblyManager.LoadAssemblies(this.applicationBasePath.Substring(0, this.applicationBasePath.LastIndexOf("src")) + "artifacts\\bin\\");
            
             ExtensionManager.SetAssemblies(assemblies);
             foreach (IExtension extension in ExtensionManager.Extensions)
