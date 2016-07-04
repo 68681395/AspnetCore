@@ -5,7 +5,8 @@
     "Microsoft.AspNetCore.Routing.Abstractions": "1.1.0-alpha1-21429",
     "Microsoft.Extensions.Configuration.Abstractions": "1.1.0-alpha1-21429",
     "Microsoft.Extensions.DependencyInjection.Abstractions": "1.1.0-alpha1-21429",
-  
+    "System.Collections.NonGeneric": "4.0.1",
+    "System.Runtime.Loader": "4.0.0"
   },
   "runtimes": {
 
@@ -14,10 +15,8 @@
   },
   "description": "t sharp description",
   "frameworks": {
-    "netstandard1.6": {
+    "netstandard1.5": {
       "dependencies": {
-        "System.Collections.NonGeneric": "4.0.2-*",
-        "System.Runtime.Loader": "4.0.1-*"
       }
     }
   },
