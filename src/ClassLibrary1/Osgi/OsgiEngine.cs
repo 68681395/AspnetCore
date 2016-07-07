@@ -230,7 +230,7 @@ namespace TSharp.Core.Osgi
         }
         private void InitAssembly(Assembly assembly)
         {
-            var verAssembly = _assemblys.GetOrAdd(assembly.GetName().Name, new MultiVersionAssembly());
+            var verAssembly = _assemblys.GetOrAdd(assembly.GetName().Name, _ => new MultiVersionAssembly());
 
             if (verAssembly.IsLatestVersion(assembly))
             {

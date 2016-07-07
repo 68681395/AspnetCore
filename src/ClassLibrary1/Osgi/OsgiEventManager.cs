@@ -14,10 +14,8 @@ namespace TSharp.Core.Osgi
     {
         private static List<IOsgiEventHandler> evts = new List<IOsgiEventHandler>(50);
 
-        public static IList<IOsgiEventHandler> Events
-        {
-            get { return evts.AsReadOnly(); }
-        }
+        public static IList<IOsgiEventHandler> Events => evts.AsReadOnly();
+
         public static void Clear()
         {
             evts.Clear();
@@ -25,14 +23,11 @@ namespace TSharp.Core.Osgi
         internal override void EngineAdd(OsgiEngine.RegExtensionAttributeItem regAttribute)
         {
             var att = regAttribute.ExtensionAttribute as RegOsgiEventAttribute;
-            if (att != null)
+            var constructorInfo = att?.EventType.GetConstructor(new Type[0]);
+            if (constructorInfo != null)
             {
-                var constructorInfo = att.EventType.GetConstructor(new Type[0]);
-                if (constructorInfo != null)
-                {
-                    var handler = constructorInfo.Invoke(new object[0]) as IOsgiEventHandler;
-                    evts.Add(handler);
-                }
+                var handler = constructorInfo.Invoke(new object[0]) as IOsgiEventHandler;
+                evts.Add(handler);
             }
         }
 

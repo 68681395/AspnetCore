@@ -10,36 +10,30 @@ namespace TSharp.Core.Osgi.Internal
     /// </summary>
     public class MultiVersionAssembly
     {
-        private readonly ConcurrentDictionary<Version, Assembly> _assemblys;
-        private Assembly _currentVersionAssembly;
-        private Assembly _latestVersionAssembly;
+        private readonly ConcurrentDictionary<Version, Assembly> assemblys;
+        private Assembly currentVersionAssembly;
+        private Assembly latestVersionAssembly;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MultiVersionAssembly"/> class.
         /// </summary>
         public MultiVersionAssembly()
         {
-            _assemblys = new ConcurrentDictionary<Version, Assembly>();
-            _latestVersionAssembly = null;
+            this.assemblys = new ConcurrentDictionary<Version, Assembly>();
+            this.latestVersionAssembly = null;
         }
 
         /// <summary>
         /// Gets the latest version assembly.
         /// </summary>
         /// <value>The latest version assembly.</value>
-        public Assembly LatestVersionAssembly
-        {
-            get { return _latestVersionAssembly; }
-        }
+        public Assembly LatestVersionAssembly => this.latestVersionAssembly;
 
         /// <summary>
         /// Gets the current version assembly.
         /// </summary>
         /// <value>The current version assembly.</value>
-        public Assembly CurrentVersionAssembly
-        {
-            get { return _currentVersionAssembly; }
-        }
+        public Assembly CurrentVersionAssembly => this.currentVersionAssembly;
 
         /// <summary>
         /// Gets the name.
@@ -47,17 +41,14 @@ namespace TSharp.Core.Osgi.Internal
         /// <value>The name.</value>
         public string Name
         {
-            get { return _latestVersionAssembly.GetName().Name; }
+            get { return this.latestVersionAssembly.GetName().Name; }
         }
 
         /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
-        public Version Version
-        {
-            get { return _currentVersionAssembly.GetName().Version; }
-        }
+        public Version Version => this.currentVersionAssembly.GetName().Version;
 
         /// <summary>
         /// 根据版本获取
@@ -70,7 +61,7 @@ namespace TSharp.Core.Osgi.Internal
                 if (version != null)
                 {
                     Assembly assembly;
-                    if (_assemblys.TryGetValue(version, out assembly))
+                    if (this.assemblys.TryGetValue(version, out assembly))
                         return assembly;
                 }
                 return null;
@@ -86,8 +77,8 @@ namespace TSharp.Core.Osgi.Internal
         /// </returns>
         public bool IsLatestVersion(Assembly assembly)
         {
-            return _latestVersionAssembly == null
-                   || assembly.GetName().Version.CompareTo(_latestVersionAssembly.GetName().Version) > 0;
+            return this.latestVersionAssembly == null
+                   || assembly.GetName().Version.CompareTo(this.latestVersionAssembly.GetName().Version) > 0;
         }
 
         /// <summary>
@@ -109,18 +100,18 @@ namespace TSharp.Core.Osgi.Internal
         public MultiVersionAssembly Add(Assembly assembly, bool update)
         {
             Version ver = assembly.GetName().Version;
-            if (!_assemblys.ContainsKey(ver))
+            if (!this.assemblys.ContainsKey(ver))
             {
-                if (_latestVersionAssembly == null
-                    || ver.CompareTo(_latestVersionAssembly.GetName().Version) > 0)
+                if (this.latestVersionAssembly == null
+                    || ver.CompareTo(this.latestVersionAssembly.GetName().Version) > 0)
                 {
-                    _latestVersionAssembly = assembly;
+                    this.latestVersionAssembly = assembly;
                     if (update)
                     {
-                        _currentVersionAssembly = assembly;
+                        this.currentVersionAssembly = assembly;
                     }
                 }
-                _assemblys[ver] = assembly;
+                this.assemblys[ver] = assembly;
             }
             return this;
         }
@@ -131,7 +122,7 @@ namespace TSharp.Core.Osgi.Internal
         /// <returns></returns>
         public Assembly[] GetAssemblys()
         {
-            return _assemblys.Values.OrderBy(KeySelector).ToArray();
+            return this.assemblys.Values.OrderBy(KeySelector).ToArray();
         }
 
         private static Version KeySelector(Assembly assembly)
