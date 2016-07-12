@@ -8,7 +8,7 @@ namespace TSharp.Core.Osgi
 	/// 	<para>TANGJINGBO</para>
 	/// 	<author>tangjingbo</author>
 	/// </summary>
-	public class RegTypeInitAttribute : RegExtensionAttribute
+	public class RegTypeInitAttribute : ExtensionAttribute
 	{
 		/// <summary>  
 		/// 如果initType是抽象的，cctor将不会被执行

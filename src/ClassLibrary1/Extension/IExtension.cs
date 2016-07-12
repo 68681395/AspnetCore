@@ -1,17 +1,16 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
- 
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace AspNet5ModularApp.Infrastructure
+namespace ClassLibrary1.Extension
 {
-  public interface IExtension
-  {
-    string Name { get; }
+    using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.DependencyInjection;
 
-    void ConfigureServices(IServiceCollection services);
-    void RegisterRoutes(IRouteBuilder routeBuilder);
-  }
+    public interface IExtension
+    {
+        string Name { get; }
+
+        void ConfigureServices(IServiceCollection services);
+        void RegisterRoutes(IRouteBuilder routeBuilder);
+    }
 }

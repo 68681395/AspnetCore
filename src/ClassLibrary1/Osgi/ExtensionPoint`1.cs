@@ -11,7 +11,7 @@ namespace TSharp.Core.Osgi
 	/// </summary>
 	/// <typeparam name="TAttribute">The type of the attribute.</typeparam>
 	public abstract class ExtensionPoint<TAttribute> : ExtensionPoint
-		where TAttribute : RegExtensionAttribute
+		where TAttribute : ExtensionAttribute
 	{
 		/// <summary>
 		/// 注册扩展
@@ -32,7 +32,7 @@ namespace TSharp.Core.Osgi
 		/// </summary>
 		/// <param name="assembly">程序集.</param>
 		/// <param name="attribute">扩展.</param>
-		internal override void _Register(Assembly assembly, RegExtensionAttribute attribute)
+		internal override void InnerRegister(Assembly assembly, ExtensionAttribute attribute)
 		{
 			Register(assembly, (TAttribute) attribute);
 		}
@@ -42,7 +42,7 @@ namespace TSharp.Core.Osgi
 		/// </summary>
 		/// <param name="assembly">程序集.</param>
 		/// <param name="attribute">扩展.</param>
-		internal override void _UnRegister(Assembly assembly, RegExtensionAttribute attribute)
+		internal override void InnerUnRegister(Assembly assembly, ExtensionAttribute attribute)
 		{
 			UnRegister(assembly, (TAttribute) attribute);
 		}

@@ -12,15 +12,15 @@ namespace TSharp.Core.Osgi
     /// </author>
     internal sealed class OsgiEventManager : ExtensionPoint<RegOsgiEventAttribute>
     {
-        private static List<IOsgiEventHandler> evts = new List<IOsgiEventHandler>(50);
+        private static readonly List<IOsgiEventHandler> evts = new List<IOsgiEventHandler>(50);
 
-        public static IList<IOsgiEventHandler> Events => evts.AsReadOnly();
+        public static IReadOnlyList<IOsgiEventHandler> Events => evts;
 
         public static void Clear()
         {
             evts.Clear();
         }
-        internal override void EngineAdd(OsgiEngine.RegExtensionAttributeItem regAttribute)
+        internal override void Add(OsgiEngine.RegExtensionAttributeItem regAttribute)
         {
             var att = regAttribute.ExtensionAttribute as RegOsgiEventAttribute;
             var constructorInfo = att?.EventType.GetConstructor(new Type[0]);

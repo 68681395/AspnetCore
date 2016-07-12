@@ -6,9 +6,9 @@ namespace TSharp.Core.Osgi
 	/// 扩展标记
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = true)]
-	public class RegExtensionAttribute : Attribute, IComparable<RegExtensionAttribute>
+	public class ExtensionAttribute : Attribute, IComparable<ExtensionAttribute>
 	{
-		private int _Order = 0;
+		private int _order = 0;
 
 		/// <summary>
 		/// 序号，注册时指定的一个整数
@@ -16,13 +16,10 @@ namespace TSharp.Core.Osgi
 		/// <value>
 		/// The order.
 		/// </value>
-		/// <remarks>
-		/// TODO:目前Order属性仅作为传递值，还没有做到将按order属性执行Register方法
-		/// </remarks>
 		public int Order
 		{
-			get { return _Order; }
-			set { _Order = value; }
+			get { return this._order; }
+			set { this._order = value; }
 		}
 
         /// <summary>
@@ -32,7 +29,7 @@ namespace TSharp.Core.Osgi
         /// <returns>
         /// A 32-bit signed integer that indicates the relative order of the objects being compared. The return value has the following meanings: Value Meaning Less than zero This object is less than the other parameter.Zero This object is equal to other. Greater than zero This object is greater than other.
         /// </returns>
-		public int CompareTo(RegExtensionAttribute other)
+		public int CompareTo(ExtensionAttribute other)
 		{
 			if (other != null)
 				return this.Order.CompareTo(other.Order);

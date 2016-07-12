@@ -12,7 +12,7 @@ namespace TSharp.Core.Osgi
     /// <remarks>
     /// tangjingbo at 2009-8-4 12:37
     /// </remarks>
-    public class RegAppEventAttribute : RegExtensionAttribute
+    public class RegAppEventAttribute : ExtensionAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RegAppEventAttribute"/> class.

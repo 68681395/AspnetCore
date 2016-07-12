@@ -9,7 +9,7 @@ namespace TSharp.Core.Osgi
 	/// 	<para>THINKPADT61</para>
 	/// 	<para>tangjingbo</para>
 	/// </summary>
-	public class RegServiceAttribute : RegExtensionAttribute
+	public class RegServiceAttribute : ExtensionAttribute
 	{
 		private Level _ContainerLevel = Level.REQUSET;
 		private bool isCached = true;

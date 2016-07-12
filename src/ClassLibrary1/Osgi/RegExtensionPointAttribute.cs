@@ -13,7 +13,7 @@ namespace TSharp.Core.Osgi
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = false)]
     public sealed class RegExtensionPointAttribute : Attribute
     {
-        private static readonly Type ExtensionAttributeType = typeof(RegExtensionAttribute);
+        private static readonly Type ExtensionAttributeType = typeof(ExtensionAttribute);
         private static readonly Type ExtensionPointType = typeof(ExtensionPoint);
 
         /// <summary>

@@ -1,4 +1,5 @@
 {
+  "language": "zh",
   "copyright": "copyright of t sharp",
   "dependencies": {
     "Microsoft.AspNetCore.Routing": "1.1.0-alpha1-21429",
@@ -20,10 +21,10 @@
       }
     }
   },
-  "title": "Tsharp.Core",
-  "version": "1.0.0-*",
-  "authors": [ "tang jingbo" ]
-
+  "title": "TSharp.Core",
+  "version": "1.0.0-1",
+  "authors": [ "tang jingbo" ],
+ 
 
 
 

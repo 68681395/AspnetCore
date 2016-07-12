@@ -8,7 +8,7 @@ namespace TSharp.Core.Osgi
     /// <author>
     /// tangjingbo
     /// </author>
-    public class RegLazyLoadingAttribute : RegExtensionAttribute
+    public class RegLazyLoadingAttribute : ExtensionAttribute
     {
         /// <summary>
         /// 接口类型或抽象类

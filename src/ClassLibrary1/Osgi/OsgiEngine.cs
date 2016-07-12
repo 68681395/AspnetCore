@@ -7,6 +7,7 @@ using Common.Logging;
 using TSharp.Core.Osgi.Internal;
 using System.Collections.Concurrent;
 using System.Runtime.Loader;
+using Microsoft.Extensions.Logging;
 
 namespace TSharp.Core.Osgi
 {
@@ -19,6 +20,8 @@ namespace TSharp.Core.Osgi
     public sealed class OsgiEngine : Disposable
     {
         private static readonly ILog Log;
+        private static Microsoft.Extensions.Logging.ILogger<OsgiEngine> 
+            logger=new Logger<Osgi.OsgiEngine>(null);
         static OsgiEngine()
         {
             try
@@ -140,14 +143,11 @@ namespace TSharp.Core.Osgi
             _assemblys = new ConcurrentDictionary<string, MultiVersionAssembly>();
         }
         private void Init()
-        {
-
-
-            //InitAssembly(this.GetType().Assembly);
-            InitAssembly(this.GetType().GetTypeInfo().Assembly);
+        { 
+            LoadAssembly(this.GetType().GetTypeInfo().Assembly);
 
             foreach (var assm in AppDomain.CurrentDomain.GetAssemblies())
-                InitAssembly(assm);
+                LoadAssembly(assm);
             if (!String.IsNullOrEmpty(RuntimePath))
             {
                 var dllFiles = Directory.GetFiles(RuntimePath, "*.dll");
@@ -156,14 +156,14 @@ namespace TSharp.Core.Osgi
                     Assembly assembly = null;
                     try
                     {
-                        assembly = LoadFrom(dllFile);
+                        assembly = LoadFromPath(dllFile);
                     }
                     catch (BadImageFormatException)
                     {
                         //  Log.Error(string.Format(",已配置引擎无法加载DLL被自动忽略。‘{0}’", dllFile), e);
                         continue;
                     }
-                    if (assembly != null) InitAssembly(assembly);
+                    if (assembly != null) LoadAssembly(assembly);
                 }
             }
             if (!string.IsNullOrEmpty(LibPath) && Directory.Exists(LibPath))
@@ -174,14 +174,14 @@ namespace TSharp.Core.Osgi
                     Assembly assembly = null;
                     try
                     {
-                        assembly = LoadFrom(dllFile);
+                        assembly = LoadFromPath(dllFile);
                     }
                     catch (BadImageFormatException e)
                     {
                         Log.Error("配置引擎无法加载DLL：" + dllFile, e);
                         continue;
                     }
-                    if (assembly != null) InitAssembly(assembly);
+                    if (assembly != null) LoadAssembly(assembly);
                 }
             }
             var extensions = new HashSet<RegExtensionAttributeItem>();
@@ -193,7 +193,7 @@ namespace TSharp.Core.Osgi
             {
                 ExtensionPoint point;
                 if (_extensionPoints.TryGetValue(extension.ExtensionAttribute.GetType(), out point))
-                    point.EngineAdd(extension);
+                    point.Add(extension);
                 else
                     Log.Warn(string.Format("没有找到程序集'{0}’中扩展'{1}'没有对应的管理类", extension.Assembly.FullName,
                                            extension.ExtensionAttribute.GetType().FullName));
@@ -203,7 +203,7 @@ namespace TSharp.Core.Osgi
             OsgiEventManager.Events.Foreach(x => x.Start(this));
 
             foreach (var point in _extensionPoints.Values)
-                point.RegisterAll();
+                point.DoRegisterAll();
 
             foreach (var point in _extensionPoints.Values)
             {
@@ -217,18 +217,12 @@ namespace TSharp.Core.Osgi
 
         }
 
-        private Assembly LoadFrom(string dllFile)
+        private Assembly LoadFromPath(string assemblyPath)
         {
-            return AssemblyLoadContext.Default.LoadFromAssemblyPath(dllFile);
+            return AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
         }
-
-        private void InitAssembly(string assemblyQualifiedName)
-        {
-            var assm = Assembly.Load(new AssemblyName(assemblyQualifiedName));
-
-            InitAssembly(assm);
-        }
-        private void InitAssembly(Assembly assembly)
+         
+        private void LoadAssembly(Assembly assembly)
         {
             var verAssembly = _assemblys.GetOrAdd(assembly.GetName().Name, _ => new MultiVersionAssembly());
 
@@ -249,14 +243,14 @@ namespace TSharp.Core.Osgi
                     {
                         _extensionPoints[extensionPointAttr.AttributeType] = extensionPointAttr.ExtensionPoint;
                     }
-                var extensionAttrs = assembly.GetCustomAttributes<RegExtensionAttribute>();
+                var extensionAttrs = assembly.GetCustomAttributes<ExtensionAttribute>();
                 if (extensionAttrs != null)
-                    foreach (RegExtensionAttribute extensionAttr in extensionAttrs)
+                    foreach (ExtensionAttribute extensionAttr in extensionAttrs)
                     {
                         var item = new RegExtensionAttributeItem(assembly, extensionAttr);
                         ExtensionPoint point;
                         if (_extensionPoints.TryGetValue(extensionAttr.GetType(), out point))
-                            point.EngineAdd(item);
+                            point.Add(item);
                         else if (extensions != null)
                             extensions.Add(item);
                         else
@@ -290,14 +284,14 @@ namespace TSharp.Core.Osgi
             /// 获取扩展标记
             /// </summary>
             /// <value>The extension attribute.</value>
-            public RegExtensionAttribute ExtensionAttribute { get; private set; }
+            public ExtensionAttribute ExtensionAttribute { get; private set; }
 
             /// <summary>
             /// 扩展项构造
             /// </summary>
             /// <param name="assembly">The assembly.</param>
             /// <param name="extensionAttribute">The extension attribute.</param>
-            public RegExtensionAttributeItem(Assembly assembly, RegExtensionAttribute extensionAttribute)
+            public RegExtensionAttributeItem(Assembly assembly, ExtensionAttribute extensionAttribute)
             {
                 Assembly = assembly;
                 ExtensionAttribute = extensionAttribute;
@@ -345,7 +339,7 @@ namespace TSharp.Core.Osgi
                         foreach (var point in _extensionPoints.Values)
                             try
                             {
-                                point.UnRegisterAll();
+                                point.DoUnRegisterAll();
                             }
                             catch (Exception ex)
                             {

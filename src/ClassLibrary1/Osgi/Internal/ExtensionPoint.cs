@@ -18,21 +18,21 @@ namespace TSharp.Core.Osgi.Internal
         {
         }
 
-        internal List<TSharp.Core.Osgi.OsgiEngine.RegExtensionAttributeItem> allReg =
+        internal List<OsgiEngine.RegExtensionAttributeItem> AllRegisters =
             new List<OsgiEngine.RegExtensionAttributeItem>(2000);
 
-        internal virtual void EngineAdd(TSharp.Core.Osgi.OsgiEngine.RegExtensionAttributeItem regAttribute)
+        internal virtual void Add(TSharp.Core.Osgi.OsgiEngine.RegExtensionAttributeItem regAttribute)
         {
-            allReg.Add(regAttribute);
+            this.AllRegisters.Add(regAttribute);
         }
 
-        internal virtual void RegisterAll()
+        internal virtual void DoRegisterAll()
         {
-            allReg.Sort((x, y) => x.ExtensionAttribute.Order.CompareTo(y.ExtensionAttribute.Order));
-            foreach (var item in allReg)
+            this.AllRegisters.Sort((x, y) => x.ExtensionAttribute.Order.CompareTo(y.ExtensionAttribute.Order));
+            foreach (var item in this.AllRegisters)
                 try
                 {
-                    this._Register(item.Assembly, item.ExtensionAttribute);
+                    this.InnerRegister(item.Assembly, item.ExtensionAttribute);
                 }
                 catch (Exception ex)
                 {
@@ -43,12 +43,12 @@ namespace TSharp.Core.Osgi.Internal
                         throw ex;
                 }
         }
-        internal virtual void UnRegisterAll()
+        internal virtual void DoUnRegisterAll()
         {
-            foreach (var item in allReg)
+            foreach (var item in this.AllRegisters)
                 try
                 {
-                    this._UnRegister(item.Assembly, item.ExtensionAttribute);
+                    this.InnerUnRegister(item.Assembly, item.ExtensionAttribute);
                 }
                 catch (Exception ex)
                 {
@@ -62,14 +62,14 @@ namespace TSharp.Core.Osgi.Internal
         /// </summary>
         /// <param name="assembly">程序集.</param>
         /// <param name="attribute">扩展.</param>
-        internal abstract void _Register(Assembly assembly, RegExtensionAttribute attribute);
+        internal abstract void InnerRegister(Assembly assembly, ExtensionAttribute attribute);
 
         /// <summary>
         /// 注销扩展
         /// </summary>
         /// <param name="assembly">程序集.</param>
         /// <param name="attribute">扩展.</param>
-        internal abstract void _UnRegister(Assembly assembly, RegExtensionAttribute attribute);
+        internal abstract void InnerUnRegister(Assembly assembly, ExtensionAttribute attribute);
 
         /// <summary>
         /// 加载时执行

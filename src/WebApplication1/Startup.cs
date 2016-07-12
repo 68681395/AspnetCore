@@ -13,9 +13,8 @@ using WebApplication1.Services;
 using System.Reflection;
 using Microsoft.Extensions.FileProviders;
 using WebApplication9;
-using AspNet5ModularApp;
-using AspNet5ModularApp.Infrastructure;
 using Microsoft.AspNetCore.Http;
+using ClassLibrary1.Extension;
 
 namespace WebApplication1
 {

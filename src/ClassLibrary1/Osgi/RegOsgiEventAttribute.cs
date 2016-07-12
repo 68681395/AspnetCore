@@ -8,7 +8,7 @@ namespace TSharp.Core.Osgi
     /// <author>
     /// tangjingbo
     /// </author> 
-    public sealed class RegOsgiEventAttribute : RegExtensionAttribute
+    public sealed class RegOsgiEventAttribute : ExtensionAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RegOsgiEventAttribute"/> class.

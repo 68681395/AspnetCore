@@ -2,14 +2,11 @@
   "userSecretsId": "aspnet-WebApplication1-42aaaa2e-5d17-429e-b63c-25ec4d885053",
 
   "dependencies": {
-
     "Microsoft.NETCore.App": {
       "version": "1.0.0-*",
       "type": "platform"
     },
     "System.Diagnostics.Process": "4.1.0-*",
-
-    "ClassLibrary1": "1.0.0-*",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.1.0-alpha1-21429",
     "Microsoft.AspNetCore.Diagnostics": "1.1.0-alpha1-21429",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.1.0-alpha1-21429",
@@ -29,9 +26,8 @@
     "Microsoft.Extensions.Logging": "1.1.0-alpha1-21429",
     "Microsoft.Extensions.Logging.Console": "1.1.0-alpha1-21429",
     "Microsoft.Extensions.Logging.Debug": "1.1.0-alpha1-21429",
-    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0-alpha1-21429"
-
-  },
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0-alpha1-21429",
+    "ClassLibrary1": "1.0.0-1"  },
 
   "tools": {
   

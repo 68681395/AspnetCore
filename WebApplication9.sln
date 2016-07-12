@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		__JSONSchema = 
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ClassLibrary1", "src\ClassLibrary1\ClassLibrary1.xproj", "{E4B035D8-A884-41D7-B8F5-5E1CD3701480}"
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebApplication1", "src\WebApplication1\WebApplication1.xproj", "{A6FFC302-6BDF-48B3-8D07-59902DAB4D36}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TSharp.Core", "src\ClassLibrary1\TSharp.Core.xproj", "{E4B035D8-A884-41D7-B8F5-5E1CD3701480}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,20 +23,20 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E4B035D8-A884-41D7-B8F5-5E1CD3701480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4B035D8-A884-41D7-B8F5-5E1CD3701480}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4B035D8-A884-41D7-B8F5-5E1CD3701480}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4B035D8-A884-41D7-B8F5-5E1CD3701480}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6FFC302-6BDF-48B3-8D07-59902DAB4D36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A6FFC302-6BDF-48B3-8D07-59902DAB4D36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6FFC302-6BDF-48B3-8D07-59902DAB4D36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6FFC302-6BDF-48B3-8D07-59902DAB4D36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4B035D8-A884-41D7-B8F5-5E1CD3701480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4B035D8-A884-41D7-B8F5-5E1CD3701480}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4B035D8-A884-41D7-B8F5-5E1CD3701480}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4B035D8-A884-41D7-B8F5-5E1CD3701480}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E4B035D8-A884-41D7-B8F5-5E1CD3701480} = {9652825C-5FC6-4D54-B478-D3E75818EF8C}
 		{A6FFC302-6BDF-48B3-8D07-59902DAB4D36} = {9652825C-5FC6-4D54-B478-D3E75818EF8C}
+		{E4B035D8-A884-41D7-B8F5-5E1CD3701480} = {9652825C-5FC6-4D54-B478-D3E75818EF8C}
 	EndGlobalSection
 EndGlobal
