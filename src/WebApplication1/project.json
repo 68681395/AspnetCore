@@ -27,7 +27,7 @@
     "Microsoft.Extensions.Logging.Console": "1.1.0-alpha1-21429",
     "Microsoft.Extensions.Logging.Debug": "1.1.0-alpha1-21429",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0-alpha1-21429",
-    "ClassLibrary1": "1.0.0-1"  },
+    "TSharp.Core": "1.0.0-1" },
 
   "tools": {
   

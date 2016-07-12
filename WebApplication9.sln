@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebApplication1", "src\WebApplication1\WebApplication1.xproj", "{A6FFC302-6BDF-48B3-8D07-59902DAB4D36}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TSharp.Core", "src\ClassLibrary1\TSharp.Core.xproj", "{E4B035D8-A884-41D7-B8F5-5E1CD3701480}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TSharp.Core", "src\TSharp.Core\TSharp.Core.xproj", "{E4B035D8-A884-41D7-B8F5-5E1CD3701480}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
