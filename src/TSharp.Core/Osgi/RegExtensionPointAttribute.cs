@@ -6,21 +6,21 @@ using TSharp.Core.Osgi.Internal;
 namespace TSharp.Core.Osgi
 {
     /// <summary>
-    /// 扩展点标记
+    /// register an extension point, this type must be extend from <see cref="ExtensionPoint"/>
     /// <para>2011/3/4</para> 
     /// <author>tangjingbo</author>
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = false)]
-    public sealed class RegExtensionPointAttribute : Attribute
+    public sealed class ExtensionPointAttribute : Attribute
     {
         private static readonly Type ExtensionAttributeType = typeof(ExtensionAttribute);
         private static readonly Type ExtensionPointType = typeof(ExtensionPoint);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RegExtensionPointAttribute"/> class.
+        /// Initializes a new instance of the <see cref="ExtensionPointAttribute"/> class.
         /// </summary>
         /// <param name="managerType">扩展点收集类的类型.</param>
-        public RegExtensionPointAttribute(Type managerType)
+        public ExtensionPointAttribute(Type managerType)
         {
 
             //todo : modify  managerType.BaseType to  managerType.DeclaringType

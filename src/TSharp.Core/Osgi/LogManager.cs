@@ -2,16 +2,35 @@
 
 namespace Common.Logging
 {
+    using Microsoft.Extensions.Logging;
+
     internal class LogManager
     {
+        private static ILoggerFactory factory;
+        static LogManager()
+        {
+             factory = new LoggerFactory()
+              .WithFilter(new FilterLoggerSettings
+              {
+                    { "Microsoft", LogLevel.Warning },
+                    { "System", LogLevel.Warning },
+                    { "SampleApp.Program", LogLevel.Debug }
+              });
+
+            // getting the logger immediately using the class's name is conventional
+            
+        }
         internal static ILog GetCurrentClassLogger()
         {
-            throw new NotImplementedException();
+         
+
+
+            return new Log();
         }
 
         internal static ILog GetLogger(string v)
         {
-            throw new NotImplementedException();
+            return new Log();
         }
     }
 
@@ -22,7 +41,7 @@ namespace Common.Logging
         void Debug(string v);
         void Warn(string v);
         void ErrorFormat(string v, Exception ex, params object[] args);
-        void Error(TypeInitializationException ex);
+        void Error(Exception ex);
     }
 
     class Log : ILog
@@ -32,32 +51,32 @@ namespace Common.Logging
 
         public void Debug(string v)
         {
-            throw new NotImplementedException();
+            
         }
 
-        public void Error(TypeInitializationException ex)
+        public void Error(Exception ex)
         {
-            throw new NotImplementedException();
+             
         }
 
         public void Error(string v, Exception ex)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void ErrorFormat(string v, Exception ex, params object[] args)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Warn(string v)
         {
-            throw new NotImplementedException();
+             
         }
 
         public void Warn(string v, Exception ex)
         {
-            throw new NotImplementedException();
+             
         }
     }
 }

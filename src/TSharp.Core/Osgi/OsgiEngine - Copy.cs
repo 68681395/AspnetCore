@@ -8,6 +8,8 @@ using TSharp.Core.Osgi.Internal;
 using System.Collections.Concurrent;
 using System.Runtime.Loader;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace TSharp.Core.Osgi
 {
@@ -17,25 +19,23 @@ namespace TSharp.Core.Osgi
     /// 	<para>TANGJINGBO</para>
     /// 	<author>tangjingbo</author>
     /// </summary>
-    public sealed class OsgiEngine : Disposable
+    public sealed class OsgiEngineByAssembly : Disposable
     {
         private static readonly ILog Log;
-        private static Microsoft.Extensions.Logging.ILogger<OsgiEngine> 
-            logger=new Logger<Osgi.OsgiEngine>(null);
-        static OsgiEngine()
+
+        static OsgiEngineByAssembly()
         {
             try
             {
                 Log = LogManager.GetCurrentClassLogger();
             }
             catch { }
-
         }
         /// <summary>
         /// 获取当前引擎单例
         /// </summary>
         /// <value>The current.</value>
-        public static OsgiEngine Current { get; private set; }
+        public static OsgiEngineByAssembly Current { get; private set; }
 
         /// <summary>
         /// 根物理路径
@@ -61,36 +61,39 @@ namespace TSharp.Core.Osgi
         /// </value>
         public bool DisableExtAttrLoadException { get; set; }
 
-        private readonly ConcurrentDictionary<Type, ExtensionPoint> _extensionPoints;
-        private readonly ConcurrentDictionary<string, MultiVersionAssembly> _assemblys;
+        private static readonly ConcurrentDictionary<Type, ExtensionPoint> _allExtensionPoints = new ConcurrentDictionary<Type, ExtensionPoint>();
+
+        private static readonly ConcurrentDictionary<string, MultiVersionAssembly> _allAssemblys = new ConcurrentDictionary<string, MultiVersionAssembly>();
 
         /// <summary>
         /// Inits the web engine.
         /// </summary>
-        /// <returns>OsgiEngine.</returns>
-        public static OsgiEngine InitWebEngine()
+        /// <returns>OsgiEngineByAssembly.</returns>
+        public static OsgiEngineByAssembly InitWebEngine()
         {
-
+            var rootPath = PlatformServices.Default.Application.ApplicationBasePath;
             //AopContext.SetHttpContextFactory(() => WebContext.Instance);
-            string basePath = Path.GetDirectoryName(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+            string basePath = Path.GetDirectoryName(rootPath);
             return Init(basePath, Path.Combine(basePath, "bin"), "", true);
         }
         /// <summary>
         /// Inits the winform engine.
         /// </summary>
         /// <param name="pluginPath">The plugin path.</param>
-        /// <returns>OsgiEngine.</returns>
-        public static OsgiEngine InitWinformEngine(string pluginPath)
+        /// <returns>OsgiEngineByAssembly.</returns>
+        public static OsgiEngineByAssembly InitWinformEngine(string pluginPath)
         {
+
+            var rootPath = PlatformServices.Default.Application.ApplicationBasePath;
             // AopContext.SetHttpContextFactory(() => WindowContext.Instance);
-            string basePath = Path.GetDirectoryName(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+            string basePath = Path.GetDirectoryName(rootPath);
             return Init(basePath, basePath, pluginPath, true);
         }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public static OsgiEngine InitWinformEngine()
+        public static OsgiEngineByAssembly InitWinformEngine()
         {
             return InitWinformEngine("plugin");
         }
@@ -103,16 +106,16 @@ namespace TSharp.Core.Osgi
         /// <param name="runtimePath">The runtime path.</param>
         /// <param name="libPath">The lib path.</param>
         /// <param name="disableExtAttrLoadException">if set to <c>true</c> [disable ext attr load exception].</param>
-        /// <returns>OsgiEngine.</returns>
+        /// <returns>OsgiEngineByAssembly.</returns>
         /// <exception cref="Exceptions.CoreException">Osgi引擎已经初始化，不能进行多次初始化！</exception>
-        public static OsgiEngine Init(string rootPath, string runtimePath, string libPath,
+        public static OsgiEngineByAssembly Init(string rootPath, string runtimePath, string libPath,
                           bool disableExtAttrLoadException)
         {
             if (Current == null)
             {
                 lock (locker)
                 {
-                    Current = new OsgiEngine(rootPath, runtimePath, libPath, disableExtAttrLoadException);
+                    Current = new OsgiEngineByAssembly(rootPath, runtimePath, libPath, disableExtAttrLoadException);
                     Current.Init();
                 }
                 return Current;
@@ -126,7 +129,7 @@ namespace TSharp.Core.Osgi
         /// <param name="runtimePath">The runtime path.</param>
         /// <param name="libPath">程序集库路径</param>
         /// <param name="disableExtAttrLoadException">if set to <c>true</c> [disable ext attr load exception].</param>
-        private OsgiEngine(string rootPath, string runtimePath, string libPath,
+        private OsgiEngineByAssembly(string rootPath, string runtimePath, string libPath,
                           bool disableExtAttrLoadException)
         {
             RootPath = rootPath;
@@ -139,14 +142,32 @@ namespace TSharp.Core.Osgi
                 {
                     LibPath = Path.Combine(runtimePath, libPath);
                 }
-            _extensionPoints = new ConcurrentDictionary<Type, ExtensionPoint>();
-            _assemblys = new ConcurrentDictionary<string, MultiVersionAssembly>();
+
+        }
+
+        //protected virtual AppDomain BuildChildDomain(AppDomain parentDomain)
+        //{
+        //    if (parentDomain == null) throw new System.ArgumentNullException("parentDomain");
+
+        //    Evidence evidence = new Evidence(parentDomain.Evidence);
+        //    AppDomainSetup setup = parentDomain.SetupInformation;
+        //    return AppDomain.CreateDomain("DiscoveryRegion", evidence, setup);
+        //}
+        public IEnumerable<Assembly> GetAssemblies()
+        {
+            var entryAssembly = Assembly.GetEntryAssembly();
+            yield return entryAssembly;
+
+            foreach (var assemblyName in entryAssembly.GetReferencedAssemblies())
+            {
+                yield return Assembly.Load(assemblyName);
+            }
         }
         private void Init()
-        { 
+        {
             LoadAssembly(this.GetType().GetTypeInfo().Assembly);
 
-            foreach (var assm in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var assm in GetAssemblies())
                 LoadAssembly(assm);
             if (!String.IsNullOrEmpty(RuntimePath))
             {
@@ -184,47 +205,48 @@ namespace TSharp.Core.Osgi
                     if (assembly != null) LoadAssembly(assembly);
                 }
             }
+
+
+        }
+
+        private void NewMethod(Assembly assembly)
+        {
             var extensions = new HashSet<ExtensionItem>();
-            foreach (string key in _assemblys.Keys)
+            foreach (string key in _allAssemblys.Keys)
             {
-                DetectExtensionPointAndRegExtensionAttr(_assemblys[key].LatestVersionAssembly, extensions);
+                DetectExtensionPointAndRegExtensionAttr(_allAssemblys[key].LatestVersionAssembly, extensions);
             }
             foreach (ExtensionItem extension in extensions)
             {
                 ExtensionPoint point;
-                if (_extensionPoints.TryGetValue(extension.ExtensionAttribute.GetType(), out point))
+                if (_allExtensionPoints.TryGetValue(extension.ExtensionAttribute.GetType(), out point))
                     point.Add(extension);
                 else
                     Log.Warn(string.Format("没有找到程序集'{0}’中扩展'{1}'没有对应的管理类", extension.Assembly.FullName,
                                            extension.ExtensionAttribute.GetType().FullName));
             }
 
-
-            OsgiEventManager.Events.Foreach(x => x.Start(this));
-
-            foreach (var point in _extensionPoints.Values)
+            foreach (var point in _allExtensionPoints.Values)
                 point.DoRegisterAll();
 
-            foreach (var point in _extensionPoints.Values)
+            foreach (var point in _allExtensionPoints.Values)
             {
                 point.OnInit();
             }
-            foreach (var point in _extensionPoints.Values)
+            foreach (var point in _allExtensionPoints.Values)
             {
                 point.OnLoad();
             }
-            OsgiEventManager.Events.Foreach(x => x.StartCompleted(this));
-
         }
 
         private Assembly LoadFromPath(string assemblyPath)
         {
             return AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
         }
-         
+
         private void LoadAssembly(Assembly assembly)
         {
-            var verAssembly = _assemblys.GetOrAdd(assembly.GetName().Name, _ => new MultiVersionAssembly());
+            var verAssembly = _allAssemblys.GetOrAdd(assembly.GetName().Name, _ => new MultiVersionAssembly());
 
             if (verAssembly.IsLatestVersion(assembly))
             {
@@ -241,7 +263,7 @@ namespace TSharp.Core.Osgi
                 if (extensionPointAttrs != null)
                     foreach (ExtensionPointAttribute extensionPointAttr in extensionPointAttrs)
                     {
-                        _extensionPoints[extensionPointAttr.AttributeType] = extensionPointAttr.ExtensionPoint;
+                        _allExtensionPoints[extensionPointAttr.AttributeType] = extensionPointAttr.ExtensionPoint;
                     }
                 var extensionAttrs = assembly.GetCustomAttributes<ExtensionAttribute>();
                 if (extensionAttrs != null)
@@ -249,7 +271,7 @@ namespace TSharp.Core.Osgi
                     {
                         var item = new ExtensionItem(assembly, extensionAttr);
                         ExtensionPoint point;
-                        if (_extensionPoints.TryGetValue(extensionAttr.GetType(), out point))
+                        if (_allExtensionPoints.TryGetValue(extensionAttr.GetType(), out point))
                             point.Add(item);
                         else if (extensions != null)
                             extensions.Add(item);
@@ -267,6 +289,7 @@ namespace TSharp.Core.Osgi
         }
 
 
+
         private bool disposed = false;
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources
@@ -280,19 +303,9 @@ namespace TSharp.Core.Osgi
                 {
                     try
                     {
-                        OsgiEventManager.Events.Foreach(x =>
-                            {
-                                try
-                                {
-                                    x.Stop(this);
-                                }
-                                catch (Exception ex)
-                                {
-                                    Log.Error(string.Format("Osgi:OsgiEvent执行Stop(OsgiEngine)时异常！类型:'{0}'", x.GetType().FullName), ex);
-                                }
-                            });
 
-                        foreach (var point in _extensionPoints.Values)
+
+                        foreach (var point in _allExtensionPoints.Values)
                         {
                             try
                             {
@@ -304,7 +317,7 @@ namespace TSharp.Core.Osgi
                             }
 
                         }
-                        foreach (var point in _extensionPoints.Values)
+                        foreach (var point in _allExtensionPoints.Values)
                             try
                             {
                                 point.DoUnRegisterAll();
@@ -313,17 +326,7 @@ namespace TSharp.Core.Osgi
                             {
                                 Log.Error(string.Format("Osgi:扩展点执行UnRegister()时异常！类型:'{0}'", point.GetType().FullName), ex);
                             }
-                        OsgiEventManager.Events.Foreach(x =>
-                        {
-                            try
-                            {
-                                x.StopCompleted(this);
-                            }
-                            catch (Exception ex)
-                            {
-                                Log.Error(string.Format("Osgi:OsgiEvent执行StopCompleted(OsgiEngine)时异常！类型:'{0}'", x.GetType().FullName), ex);
-                            }
-                        });
+
                         OsgiEventManager.Clear();
 
                         Current = null;

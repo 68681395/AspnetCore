@@ -34,7 +34,7 @@ namespace WebApplication1
                           })
 
                     .Build();
-                //host.Services.GetServices(null);
+               
                 host.Run();
 
             }

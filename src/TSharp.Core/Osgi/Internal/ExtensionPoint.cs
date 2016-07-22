@@ -18,10 +18,10 @@ namespace TSharp.Core.Osgi.Internal
         {
         }
 
-        internal List<OsgiEngine.RegExtensionAttributeItem> AllRegisters =
-            new List<OsgiEngine.RegExtensionAttributeItem>(2000);
+        internal List<ExtensionItem> AllRegisters =
+            new List<ExtensionItem>(2000);
 
-        internal virtual void Add(TSharp.Core.Osgi.OsgiEngine.RegExtensionAttributeItem regAttribute)
+        internal virtual void Add(ExtensionItem regAttribute)
         {
             this.AllRegisters.Add(regAttribute);
         }
@@ -100,4 +100,39 @@ namespace TSharp.Core.Osgi.Internal
             return true;
         }
     }
+
+
+
+    /// <summary>
+    /// 扩展项
+    /// <para>2011/3/4</para>
+    /// 	<para>TANGJINGBO</para>
+    /// 	<author>tangjingbo</author>
+    /// </summary>
+    internal sealed class ExtensionItem
+    {
+        /// <summary>
+        /// 扩展项所属程序集
+        /// </summary>
+        /// <value>The assembly.</value>
+        public Assembly Assembly { get; private set; }
+
+        /// <summary>
+        /// 获取扩展标记
+        /// </summary>
+        /// <value>The extension attribute.</value>
+        public ExtensionAttribute ExtensionAttribute { get; private set; }
+
+        /// <summary>
+        /// 扩展项构造
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
+        /// <param name="extensionAttribute">The extension attribute.</param>
+        public ExtensionItem(Assembly assembly, ExtensionAttribute extensionAttribute)
+        {
+            Assembly = assembly;
+            ExtensionAttribute = extensionAttribute;
+        }
+    }
+
 }

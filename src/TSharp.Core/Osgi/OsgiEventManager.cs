@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using TSharp.Core.Osgi.Internal;
 
 namespace TSharp.Core.Osgi
 {
@@ -20,7 +21,7 @@ namespace TSharp.Core.Osgi
         {
             evts.Clear();
         }
-        internal override void Add(OsgiEngine.RegExtensionAttributeItem regAttribute)
+        internal override void Add(ExtensionItem regAttribute)
         {
             var att = regAttribute.ExtensionAttribute as RegOsgiEventAttribute;
             var constructorInfo = att?.EventType.GetConstructor(new Type[0]);
